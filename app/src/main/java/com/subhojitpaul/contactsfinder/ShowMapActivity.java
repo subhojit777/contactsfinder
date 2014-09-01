@@ -1,5 +1,10 @@
 package com.subhojitpaul.contactsfinder;
 
+import android.content.Context;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.app.Activity;
 
@@ -10,9 +15,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class ShowMapActivity extends Activity {
-    static final LatLng HAMBURG = new LatLng(53.558, 9.927);
-    static final LatLng KIEL = new LatLng(53.551, 9.993);
+public class ShowMapActivity extends Activity implements LocationListener {
+    private Double deviceLatitude;
+    private Double deviceLongitude;
+    private LocationManager locationManager;
+    private String provider;
     private GoogleMap map;
 
     @Override
@@ -20,14 +27,52 @@ public class ShowMapActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_map);
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
-        Marker hamburg = map.addMarker(new MarkerOptions().position(HAMBURG).title("Hamburg"));
-        Marker kiel = map.addMarker(new MarkerOptions()
-                .position(KIEL)
-                .title("Kiel")
-                .snippet("Kiel is cool"));
 
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(HAMBURG, 15));
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
+        Criteria criteria = new Criteria();
+        provider = locationManager.getBestProvider(criteria, false);
+        Location location = locationManager.getLastKnownLocation(provider);
+
+        if (location != null) {
+            onLocationChanged(location);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        locationManager.requestLocationUpdates(provider, 400, 1, this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        locationManager.removeUpdates(this);
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        deviceLatitude = location.getLatitude();
+        deviceLongitude = location.getLongitude();
+
+        Marker currentDeviceLocation = map.addMarker(new MarkerOptions().position(new LatLng(deviceLatitude, deviceLongitude)));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(deviceLatitude, deviceLongitude), 15));
         map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+        // Auto-generated stub.
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+        // Auto-generated stub.
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+        // Auto-generated stub.
     }
 }
