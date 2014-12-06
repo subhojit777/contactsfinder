@@ -1,6 +1,5 @@
 package com.subhojitpaul.contactsfinder;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
@@ -30,11 +29,6 @@ public class ShowMapActivity extends Activity implements LocationListener {
         setContentView(R.layout.activity_show_map);
         Intent intent = getIntent();
         String range = intent.getStringExtra(MainActivity.RANGE);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(range)
-                .setTitle(range);
-        AlertDialog dialog = builder.create();
 
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 
