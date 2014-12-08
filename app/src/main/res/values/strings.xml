@@ -3,7 +3,7 @@
 
     <string name="app_name">Contacts finder</string>
     <string name="title_activity_show_map">Contacts finder</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Contacts Finder</string>
     <string name="action_settings">Settings</string>
 
 </resources>
