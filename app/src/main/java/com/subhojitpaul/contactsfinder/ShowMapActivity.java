@@ -18,7 +18,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 
-public class ShowMapActivity extends Activity implements LocationListener {
+public class ShowMapActivity extends Activity {
     private double deviceLatitude;
     private double deviceLongitude;
     private LocationManager locationManager;
@@ -32,70 +32,35 @@ public class ShowMapActivity extends Activity implements LocationListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_map);
         Intent intent = getIntent();
+        Log.d(TAG, "I made it here");
 
         showLocations();
     }
 
     public double[] getDeviceLocation() {
+        Log.d(TAG, "I made it here too");
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Log.d(TAG, "I made it here too should i be here");
 
         Criteria criteria = new Criteria();
+        Log.d(TAG, "I made it here too should i be here or here");
         provider = locationManager.getBestProvider(criteria, false);
+        Log.d(TAG, "I made it here too should i be here or here man");
         Location location = locationManager.getLastKnownLocation(provider);
+        Log.d(TAG, "I made it here too should i be here or here man man");
+        Log.d(TAG, String.valueOf(location.getLatitude()));
+        Log.d(TAG, String.valueOf(location.getLongitude()));
 
         return new double[] {location.getLatitude(), location.getLongitude()};
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        locationManager.requestLocationUpdates(provider, 400, 1, this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        locationManager.removeUpdates(this);
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        Log.d(TAG, "here");
-        deviceLatitude = location.getLatitude();
-        deviceLongitude = location.getLongitude();
-
-        double[] deviceLocation = new double[] {deviceLatitude, deviceLongitude};
-        double[] anotherLocation = getAnotherLocation();
-
-        locations.add(anotherLocation);
-        locations.add(deviceLocation);
-
-        showLocations();
-
-        //map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(deviceLatitude, deviceLongitude), 15));
-        //map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
-    }
-
-    @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {
-        // Auto-generated stub.
-    }
-
-    @Override
-    public void onProviderEnabled(String s) {
-        // Auto-generated stub.
-    }
-
-    @Override
-    public void onProviderDisabled(String s) {
-        // Auto-generated stub.
-    }
-
     public double[] getAnotherLocation() {
+        Log.d(TAG, "I made it here again");
         return new double[] {22.569165, 88.433597};
     }
 
     public void showLocations() {
+        Log.d(TAG, "I made it here finally");
         ArrayList locations = new ArrayList();
         locations.add(getDeviceLocation());
         locations.add(getAnotherLocation());
@@ -105,7 +70,7 @@ public class ShowMapActivity extends Activity implements LocationListener {
         if (map != null) {
             for (int i = 0; i < locations.size(); i++) {
                 locations.get(i);
-                //Marker currentDeviceLocation = map.addMarker(new MarkerOptions().position(locations.get(i)[0], locations.get(i)[1]));
+                Marker currentDeviceLocation = map.addMarker(new MarkerOptions().position(new LatLng(22.569165, 88.433597)));
             }
         }
     }
