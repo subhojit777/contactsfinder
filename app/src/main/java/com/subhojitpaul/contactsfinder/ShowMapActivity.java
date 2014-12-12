@@ -74,21 +74,21 @@ public class ShowMapActivity extends Activity implements LocationListener {
         return new double[] {location.getLatitude(), location.getLongitude()};
     }*/
 
-    /*public double[] getAnotherLocation() {
-        Log.d(TAG, "I made it here again");
+    public Double[] getAnotherLocation() {
         return new Double[] {22.569165, 88.433597};
-    }*/
+    }
 
     public void showLocations() {
+        Double[] coordinates;
         locations.add(new Double[] {deviceLatitude, deviceLongitude});
-        //locations.add(getAnotherLocation());
+        locations.add(getAnotherLocation());
 
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 
         if (map != null) {
             for (int i = 0; i < locations.size(); i++) {
-                locations.get(i);
-                Marker currentDeviceLocation = map.addMarker(new MarkerOptions().position(new LatLng(22.569165, 88.433597)));
+                coordinates = locations.get(i);
+                Marker currentDeviceLocation = map.addMarker(new MarkerOptions().position(new LatLng(coordinates[0], coordinates[1])));
             }
         }
     }
