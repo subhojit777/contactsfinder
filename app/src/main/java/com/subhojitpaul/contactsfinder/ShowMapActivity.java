@@ -8,16 +8,12 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.app.Activity;
-import android.util.Log;
-
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ShowMapActivity extends Activity implements LocationListener {
@@ -59,23 +55,8 @@ public class ShowMapActivity extends Activity implements LocationListener {
         locationManager.removeUpdates(this);
     }
 
-    /*public double[] getDeviceLocation() {
-        Log.d(TAG, "I made it here too");
-
-        Log.d(TAG, "I made it here too should i be here");
-
-
-        Log.d(TAG, "I made it here too should i be here or here man");
-
-        Log.d(TAG, "I made it here too should i be here or here man man");
-        Log.d(TAG, String.valueOf(location.getLatitude()));
-        Log.d(TAG, String.valueOf(location.getLongitude()));
-
-        return new double[] {location.getLatitude(), location.getLongitude()};
-    }*/
-
     public Double[] getAnotherLocation() {
-        return new Double[] {22.569165, 88.433597};
+        return new Double[] {28.63224, 77.22072};
     }
 
     public void showLocations() {
