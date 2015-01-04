@@ -8,11 +8,13 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.app.Activity;
+
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +25,6 @@ public class ShowMapActivity extends Activity implements LocationListener {
     private String provider;
     private GoogleMap map;
     private List<Double[]> locations = new ArrayList<Double[]>();
-    private static final String TAG = "ContactsFinder";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +57,12 @@ public class ShowMapActivity extends Activity implements LocationListener {
     }
 
     public Double[] getAnotherLocation() {
-        return new Double[] {28.63224, 77.22072};
+        return new Double[]{28.63224, 77.22072};
     }
 
     public void showLocations() {
         Double[] coordinates;
-        locations.add(new Double[] {deviceLatitude, deviceLongitude});
+        locations.add(new Double[]{deviceLatitude, deviceLongitude});
         locations.add(getAnotherLocation());
 
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
